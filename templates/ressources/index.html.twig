@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste Ressources{% endblock %}
+
+{% block body %}
+
+    {% block header %}
+        <header class="header header-inverse" style="background-image: url({{ asset('assets/img/formRessource.jpg') }});" data-overlay="4">
+            <div class="container text-center">
+
+                <div class="row">
+                    <div class="col-12 col-lg-8 offset-lg-2">
+
+                        <h1>Liste des ressources</h1>
+                        <a class="btn btn-lg btn-primary bg-dark border-transparent opacity-90" href="{{ path('ressources_new') }}">Ajouter</a>
+                    </div>
+                </div>
+
+            </div>
+        </header>
+    {% endblock %}
+
+    <!-- Main container -->
+    <main class="main-content">
+
+        <section class="section">
+            <div class="container">
+                <div data-provide="shuffle">
+                    <div class="text-center gap-multiline-items-2" data-shuffle="filter">
+                        <button class="btn btn-outline btn-round btn-info active" data-shuffle="button">Toutes</button>
+                        <button class="btn btn-outline btn-round btn-info" data-shuffle="button" data-group="minage">Minage</button>
+                        <button class="btn btn-outline btn-round btn-info" data-shuffle="button" data-group="fusion">Fusion</button>
+                        <button class="btn btn-outline btn-round btn-info" data-shuffle="button" data-group="condensation atmosphérique">Condensation</button>
+                        <button class="btn btn-outline btn-round btn-info" data-shuffle="button" data-group="chimie">Chimie</button>
+                    </div>
+
+                    <br><br>
+
+                    <div class="row gap-y text-center" data-shuffle="list">
+                        {% for ressource in ressources %}
+
+                            <div class="col-6 col-md-4 col-lg-3 portfolio-2" data-shuffle="item" data-groups="{{ ressource.origin }}">
+                                <p><a href="{{ path('ressources_show', {'id': ressource.id}) }}"><img src="/assets/img/ressources/{{ ressource.imageName }}" alt="{{ ressource.name }}" class="w-150"></a></p>
+                                <p><strong>{{ ressource.name }}</strong><br><small>{{ ressource.origin }}</small></p>
+                                <p><a class="btn btn-sm btn-info bg-dark border-transparent opacity-85" href="{{ path('ressources_edit', {'id': ressource.id}) }}">Modifier</a></p>
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+{% endblock %}

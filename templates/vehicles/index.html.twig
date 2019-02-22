@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<title>Vehicles index</title>
+
+{% block body %}
+    <h1>Vehicles index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vehicle in vehicles %}
+            <tr>
+                <td>{{ vehicle.id }}</td>
+                <td>{{ vehicle.name }}</td>
+                <td>
+                    <a href="{{ path('vehicles_show', {'id': vehicle.id}) }}">show</a>
+                    <a href="{{ path('vehicles_edit', {'id': vehicle.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('vehicles_new') }}">Create new</a>
+{% endblock %}

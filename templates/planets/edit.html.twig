@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<title>Edit Planets</title>
+
+{% block body %}
+    <h1>Edit Planets</h1>
+
+    {{ include('planets/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('planets_index') }}">back to list</a>
+
+    {{ include('planets/_delete_form.html.twig') }}
+{% endblock %}

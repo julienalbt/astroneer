@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue sur le wiki astroneer{% endblock %}
+
+{% block body %}
+    {% block header %}
+        <!-- Header -->
+        <header class="header header-inverse h-fullscreen pb-80" data-parallax="{{ asset('assets/img/accueil.jpg') }}" data-overlay="4">
+            <div class="container text-center">
+
+                <div class="row h-full">
+                    <div class="col-12 col-lg-8 offset-lg-2 align-self-center">
+
+                        <h1 class="display-2 zekton">Astroneer</h1>
+                        <h1 class="display-5 zekton">Le wiki français</h1>
+                        <br>
+
+                        <br><br><br>
+
+                        <a class="btn btn-lg btn-round w-100 mb-10 mx-10 zekton bg-dark border-transparent" href="#" data-scrollto="section-intro">Wiki</a>
+                        <a class="btn btn-lg btn-round w-100 mb-10 mx-10 bg-light border-transparent" href="#" data-scrollto="section-intro"><i class="fas fa-envelope fa-lg"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </header>
+        <!-- END Header -->
+    {% endblock %}
+{% endblock %}

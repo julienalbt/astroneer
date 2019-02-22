@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<title>Edit Vehicles</title>
+
+{% block body %}
+    <h1>Edit Vehicles</h1>
+
+    {{ include('vehicles/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('vehicles_index') }}">back to list</a>
+
+    {{ include('vehicles/_delete_form.html.twig') }}
+{% endblock %}

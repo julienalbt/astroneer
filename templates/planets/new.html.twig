@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+
+<title>New Planets</title>
+
+{% block body %}
+    <h1>Create new Planets</h1>
+
+    {{ include('planets/_form.html.twig') }}
+
+    <a href="{{ path('planets_index') }}">back to list</a>
+{% endblock %}

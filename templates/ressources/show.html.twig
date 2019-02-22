@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ressources{% endblock %}
+
+{% block body %}
+
+    {% block header %}
+        <header class="header header-inverse" style="background-image: url({{ asset('assets/img/formRessource.jpg') }});" data-overlay="4">
+            <div class="container text-center">
+
+                <div class="row">
+                    <div class="col-12 col-lg-8 offset-lg-2">
+
+                        <h1>{{ ressource.name }}</h1>
+                        <p><a class="btn btn-lg btn-primary opacity-85" href="{{ path('ressources_edit', {'id': ressource.id}) }}">Modifier</a></p>
+                        <p><a class="btn btn-sm btn-secondary opacity-85" href="{{ path('ressources_index') }}">Retour</a></p>
+                    </div>
+                </div>
+
+            </div>
+        </header>
+    {% endblock %}
+
+    <main class="main-content">
+
+        <section class="section bb-1">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-12 col-md-8">
+                        <div class="swiper-container">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide text-center"><img src="/assets/img/ressources/{{ ressource.imageName }}" alt="..."></div>
+                                <div class="swiper-slide text-center"><img src="/assets/img/ressources/{{ ressource.imageName }}" alt="..."></div>
+                                <div class="swiper-slide text-center"><img src="/assets/img/ressources/{{ ressource.imageName }}" alt="..."></div>
+                                <div class="swiper-slide text-center"><img src="/assets/img/ressources/{{ ressource.imageName }}" alt="..."></div>
+                            </div>
+
+                            <div class="swiper-pagination"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-12 col-md-4">
+                        <br>
+                        <h5>Composite</h5>
+
+                        <p>
+                            <span class="lead">Utilisation</span>
+                        </p>
+
+                        <p>{{ ressource.name }} est obtenu par {{ ressource.origin }}
+                            et est utilisé dans les constructions suivante :
+                        </p>
+
+                        <ul>
+                            {% for whatVehicles in ressource.whatVehicles %}
+                                <li><a href="{{ path('vehicles_show', {'id': whatVehicles.id}) }}">{{ whatVehicles.name }}</a></li>
+                                {% endfor %}
+                                {% for whatMachines in ressource.whatMachines %}
+                                <li><a href="{{ path('machines_show', {'id': whatMachines.id}) }}">{{ whatMachines.name }}</a></li>
+                                {% endfor %}
+                                {% for whatObjects in ressource.whatObjects %}
+                                <li><a href="{{ path('objects_show', {'id': whatObjects.id}) }}">{{ whatObjects.name }}</a></li>
+                                {% endfor %}
+                        </ul>
+
+                        <hr>
+
+                        <div class="row">
+                            <div class="col form-group">
+                                {{ include('ressources/_delete_form.html.twig') }}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <br>
+                <hr>
+                <br>
+
+
+                <div class="row">
+                    <div class="col-12 col-lg-8 offset-lg-2">
+                        <h5>Full specification</h5>
+
+                        <p>Interactively foster interoperable schemas rather than client-centric architectures. Progressively drive collaborative human capital vis-a-vis optimal ideas. Monotonectally fashion cross-platform leadership skills through high standards in manufactured products. Continually reintermediate.</p>
+                        <p>Progressively deliver ethical schemas before equity invested intellectual capital. Rapidiously embrace value-added manufactured products rather than 24/7 information. Credibly whiteboard compelling methodologies installed base action items. Objectively maintain.</p>
+
+                        <h6>Warranty</h6>
+                        <p>Synergistically empower multimedia based scenarios before backward-compatible testing procedures. Interactively disintermediate distinctive portals with state of the art sources. Conveniently architect process-centric quality vectors for cross-platform models. Continually expedite.</p>
+
+                        <h6>Shipping info</h6>
+                        <p>Progressively morph plug-and-play value without market positioning partnerships. Authoritatively myocardinate high standards in deliverables and effective opportunities. Interactively whiteboard premium relationships rather than go forward expertise. Phosfluorescently target process-centric.</p>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+{% endblock %}
