@@ -9,6 +9,7 @@ parameters:
     app.path.planets_images: /assets/img/planets
     app.path.vehicles_images: /assets/img/vehicles
     app.path.machines_images: /assets/img/machines
+    app.path.objects_images: /assets/img/objects
 
 services:
     # default configuration for services in *this* file
@@ -51,4 +52,8 @@ vich_uploader:
         machines_images:
             uri_prefix: /assets/img/machines
             upload_destination: '%kernel.project_dir%/public/assets/img/machines'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+        objects_images:
+            uri_prefix: /assets/img/objects
+            upload_destination: '%kernel.project_dir%/public/assets/img/objects'
             namer: Vich\UploaderBundle\Naming\UniqidNamer

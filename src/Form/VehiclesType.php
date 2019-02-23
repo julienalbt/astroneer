@@ -28,7 +28,7 @@ class VehiclesType extends AbstractType {
                                 ->orderBy('e.id', 'ASC');
                     },
                     'choice_label' => 'name',
-                    'label' => 'Quelles ressources pour ce véhicule ?',
+                    'label' => 'Quelle(s) ressource(s) pour ce véhicule ?',
                     'multiple' => 'true',
                     'required' => false,
                 ))

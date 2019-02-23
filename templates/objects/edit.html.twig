@@ -1,13 +1,12 @@
-<!DOCTYPE html>
+{% extends 'base.html.twig' %}
 
-<title>Edit Objects</title>
+{% block title %}Éditer {{ object.name }}{% endblock %}
 
 {% block body %}
-    <h1>Edit Objects</h1>
-
-    {{ include('objects/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('objects_index') }}">back to list</a>
-
-    {{ include('objects/_delete_form.html.twig') }}
+    <main class="main-content mh-fullscreen bg-img center-vh" data-parallax="{{ asset('assets/img/formMachine.jpg') }}" data-overlay="3">
+        <div class="card card-shadowed p-50 w-700 mb-0 opacity-85" style="max-width: 100%">
+            <h5 class="text-uppercase text-center mb-50">Éditer {{ object.name }}</h5>
+            {{ include('objects/_form.html.twig') }}
+        </div>
+    </main>
 {% endblock %}

@@ -1,35 +1,58 @@
-<!DOCTYPE html>
+{% extends 'base.html.twig' %}
 
-<title>Objects index</title>
+{% block title %}Liste objets{% endblock %}
 
 {% block body %}
-    <h1>Objects index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for object in objects %}
-            <tr>
-                <td>{{ object.id }}</td>
-                <td>{{ object.name }}</td>
-                <td>
-                    <a href="{{ path('objects_show', {'id': object.id}) }}">show</a>
-                    <a href="{{ path('objects_edit', {'id': object.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% block header %}
+        <header class="header header-inverse" style="background-image: url({{ asset('assets/img/formMachine.jpg') }});" data-overlay="4">
+            <div class="container text-center">
 
-    <a href="{{ path('objects_new') }}">Create new</a>
+                <div class="row">
+                    <div class="col-12 col-lg-8 offset-lg-2">
+
+                        <h1>Liste des objets</h1>
+                        <a class="btn btn-lg btn-primary bg-dark border-transparent opacity-90" href="{{ path('objects_new') }}">Ajouter</a>
+                    </div>
+                </div>
+
+            </div>
+        </header>
+    {% endblock %}
+
+    <!-- Main container -->
+    <main class="main-content">
+
+        <section class="section bg-dark">
+            <div class="container">
+                <div data-provide="shuffle">
+                    <div class="text-center gap-multiline-items-2 mb-100" data-shuffle="filter">
+                        <button class="btn btn-outline btn-round btn-info active" data-shuffle="button">Toutes</button>
+                        <button class="btn btn-outline btn-round btn-info" data-shuffle="button" data-group="Imprimante Backpack">Backpack</button>
+                        <button class="btn btn-outline btn-round btn-info" data-shuffle="button" data-group="Imprimante petite">Petite imprimante</button>
+                        <button class="btn btn-outline btn-round btn-info" data-shuffle="button" data-group="Imprimante moyenne">Moyenne imprimante</button>
+                        <button class="btn btn-outline btn-round btn-info" data-shuffle="button" data-group="Imprimante grande">Grande imprimante</button>
+                    </div>
+
+                    <br><br>
+
+                    <div class="row gap-y text-center" data-shuffle="list">
+                        {% for object in objects %}
+
+                            <div class="col-6 col-md-4" data-shuffle="item" data-groups="{% if object.machineWhoCreateObjects == null %}{% else %}{{ object.machineWhoCreateObjects.name }}{% endif %}">
+                                <p><a href="{{ path('objects_show', {'id': object.id}) }}"><img src="/assets/img/objects/{{ object.imageName }}" alt="{{ object.name }}" class="w-150"></a></p>
+                                <p><strong>{{ object.name }}</strong></p>
+                                <p><a class="btn btn-sm btn-info-outline border-transparent opacity-85" href="{{ path('objects_edit', {'id': object.id}) }}">Modifier</a></p>
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </main>
+
 {% endblock %}
