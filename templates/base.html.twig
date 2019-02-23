@@ -52,6 +52,8 @@
                             <li class="nav-item"><a class="nav-link zekton hover-primary" href="{{ path('machines_index') }}">Machines</a></li>
                             <li class="nav-item"><a class="nav-link zekton hover-primary" href="{{ path('objects_index') }}">Objets</a></li>
                             <li class="nav-item"><a class="nav-link zekton hover-primary" href="{{ path('vehicles_index') }}">Véhicules</a></li>
+                            <li class="nav-item"><a class="nav-link zekton hover-primary" href="#">Contact</a></li>
+
                         </ul>
 
                         <hr>
@@ -80,6 +82,11 @@
                     $('#planets_ressourcesOnPlanet').select2();
                     $('#vehicles_ressourcesForVehicle').select2();
                     $('#vehicles_machineWhoCreateVehicles').select2();
+                    $('#machines_ressourcesForMachine').select2();
+                    $('#machines_machineWhoCreateMachines').select2();
+                    $('#machines_objectsByMachine').select2();
+                    $('#machines_vehiclesByMachine').select2();
+                    $('#machines_machinesByMachine').select2();
                 });
             </script>
         {% endblock %}

@@ -26,14 +26,12 @@
         <section class="section bg-dark">
             <div class="container">
                 <div data-provide="shuffle">
-                    <div class="text-center gap-multiline-items-2" data-shuffle="filter">
+                    <div class="text-center gap-multiline-items-2 mb-100" data-shuffle="filter">
                         <button class="btn btn-outline btn-round btn-info active" data-shuffle="button">Toutes</button>
                         <button class="btn btn-outline btn-round btn-info" data-shuffle="button" data-group="Imprimante petite">Petite imprimante</button>
                         <button class="btn btn-outline btn-round btn-info" data-shuffle="button" data-group="Imprimante moyenne">Moyenne imprimante</button>
                         <button class="btn btn-outline btn-round btn-info" data-shuffle="button" data-group="Imprimante grande">Grande imprimante</button>
                     </div>
-
-                    <br><br>
 
                     <div class="row gap-y text-center" data-shuffle="list">
                         {% for vehicle in vehicles %}

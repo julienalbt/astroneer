@@ -1,4 +1,29 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, { 'attr': {'class': 'form-type-material'} }) }}
+
+<div class="form-group">
+    {{ form_row(form.name, { 'attr': {'class': 'form-control'}, 'label_attr': {'class': 'fs-16 fw-600'} }) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.ressourcesForMachine, { 'attr': {'class': 'form-control'}, 'label_attr': {'class': 'fs-16 fw-600'} }) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.machineWhoCreateMachines, { 'attr': {'class': 'form-control'}, 'label_attr': {'class': 'fs-16 fw-600'} }) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.objectsByMachine, { 'attr': {'class': 'form-control'}, 'label_attr': {'class': 'fs-16 fw-600'} }) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.vehiclesByMachine, { 'attr': {'class': 'form-control'}, 'label_attr': {'class': 'fs-16 fw-600'} }) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.machinesByMachine, { 'attr': {'class': 'form-control'}, 'label_attr': {'class': 'fs-16 fw-600'} }) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.imageFile, { 'attr': {'class': 'form-control'}, 'label_attr': {'class': 'fs-16 fw-600'} }) }}
+</div>
+<img src="/assets/img/planets/{{ machine.imageName }}" alt="{{ machine.name }}" class="w-150">
+<br><br><br>
+<button class="btn btn-bold btn-block btn-info" type="submit">Enregistrer</button>
+<br>
+<a href="{{ path('machines_index') }}" class="btn btn-bold btn-block btn-secondary" type="submit">Retour</a>
 {{ form_end(form) }}

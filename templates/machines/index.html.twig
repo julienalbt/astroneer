@@ -1,35 +1,57 @@
-<!DOCTYPE html>
+{% extends 'base.html.twig' %}
 
-<title>Machines index</title>
+{% block title %}Liste machines{% endblock %}
 
 {% block body %}
-    <h1>Machines index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for machine in machines %}
-            <tr>
-                <td>{{ machine.id }}</td>
-                <td>{{ machine.name }}</td>
-                <td>
-                    <a href="{{ path('machines_show', {'id': machine.id}) }}">show</a>
-                    <a href="{{ path('machines_edit', {'id': machine.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% block header %}
+        <header class="header header-inverse" style="background-image: url({{ asset('assets/img/formMachine.jpg') }});" data-overlay="4">
+            <div class="container text-center">
 
-    <a href="{{ path('machines_new') }}">Create new</a>
+                <div class="row">
+                    <div class="col-12 col-lg-8 offset-lg-2">
+
+                        <h1>Liste des machines</h1>
+                        <a class="btn btn-lg btn-primary bg-dark border-transparent opacity-90" href="{{ path('machines_new') }}">Ajouter</a>
+                    </div>
+                </div>
+
+            </div>
+        </header>
+    {% endblock %}
+
+    <!-- Main container -->
+    <main class="main-content">
+
+        <section class="section bg-dark">
+            <div class="container">
+                <div data-provide="shuffle">
+                    <div class="text-center gap-multiline-items-2 mb-100" data-shuffle="filter">
+                        <button class="btn btn-outline btn-round btn-info active" data-shuffle="button">Toutes</button>
+                        <button class="btn btn-outline btn-round btn-info" data-shuffle="button" data-group="Imprimante Backpack">Backpack</button>
+                        <button class="btn btn-outline btn-round btn-info" data-shuffle="button" data-group="Imprimante petite">Petite imprimante</button>
+                        <button class="btn btn-outline btn-round btn-info" data-shuffle="button" data-group="Imprimante moyenne">Moyenne imprimante</button>
+                    </div>
+
+                    <br><br>
+
+                    <div class="row gap-y text-center" data-shuffle="list">
+                        {% for machine in machines %}
+
+                            <div class="col-6 col-md-4" data-shuffle="item" data-groups="{% if machine.machineWhoCreateMachines == null %}{% else %}{{ machine.machineWhoCreateMachines.name }}{% endif %}">
+                                <p><a href="{{ path('machines_show', {'id': machine.id}) }}"><img src="/assets/img/machines/{{ machine.imageName }}" alt="{{ machine.name }}" class="w-150"></a></p>
+                                <p><strong>{{ machine.name }}</strong></p>
+                                <p><a class="btn btn-sm btn-info-outline border-transparent opacity-85" href="{{ path('machines_edit', {'id': machine.id}) }}">Modifier</a></p>
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </main>
+
 {% endblock %}
