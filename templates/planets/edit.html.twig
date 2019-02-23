@@ -1,13 +1,12 @@
-<!DOCTYPE html>
+{% extends 'base.html.twig' %}
 
-<title>Edit Planets</title>
+{% block title %}Éditer {{ planet.name }}{% endblock %}
 
 {% block body %}
-    <h1>Edit Planets</h1>
-
-    {{ include('planets/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('planets_index') }}">back to list</a>
-
-    {{ include('planets/_delete_form.html.twig') }}
+    <main class="main-content mh-fullscreen bg-img center-vh" data-parallax="{{ asset('assets/img/formPlanet.jpg') }}" data-overlay="3">
+        <div class="card card-shadowed p-50 w-700 mb-0 opacity-85" style="max-width: 100%">
+            <h5 class="text-uppercase text-center mb-50">Éditer {{ planet.name }}</h5>
+            {{ include('planets/_form.html.twig') }}
+        </div>
+    </main>
 {% endblock %}

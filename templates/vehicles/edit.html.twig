@@ -1,13 +1,12 @@
-<!DOCTYPE html>
+{% extends 'base.html.twig' %}
 
-<title>Edit Vehicles</title>
+{% block title %}Éditer {{ vehicle.name }}{% endblock %}
 
 {% block body %}
-    <h1>Edit Vehicles</h1>
-
-    {{ include('vehicles/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('vehicles_index') }}">back to list</a>
-
-    {{ include('vehicles/_delete_form.html.twig') }}
+    <main class="main-content mh-fullscreen bg-img center-vh" data-parallax="{{ asset('assets/img/formVehicle.jpg') }}" data-overlay="3">
+        <div class="card card-shadowed p-50 w-700 mb-0 opacity-85" style="max-width: 100%">
+            <h5 class="text-uppercase text-center mb-50">Éditer {{ vehicle.name }}</h5>
+            {{ include('vehicles/_form.html.twig') }}
+        </div>
+    </main>
 {% endblock %}

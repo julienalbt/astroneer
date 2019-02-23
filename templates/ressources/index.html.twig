@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste Ressources{% endblock %}
+{% block title %}Liste ressources{% endblock %}
 
 {% block body %}
 
@@ -23,7 +23,7 @@
     <!-- Main container -->
     <main class="main-content">
 
-        <section class="section">
+        <section class="section bg-dark">
             <div class="container">
                 <div data-provide="shuffle">
                     <div class="text-center gap-multiline-items-2" data-shuffle="filter">
@@ -39,10 +39,10 @@
                     <div class="row gap-y text-center" data-shuffle="list">
                         {% for ressource in ressources %}
 
-                            <div class="col-6 col-md-4 col-lg-3 portfolio-2" data-shuffle="item" data-groups="{{ ressource.origin }}">
+                            <div class="col-6 col-md-4" data-shuffle="item" data-groups="{{ ressource.origin }}">
                                 <p><a href="{{ path('ressources_show', {'id': ressource.id}) }}"><img src="/assets/img/ressources/{{ ressource.imageName }}" alt="{{ ressource.name }}" class="w-150"></a></p>
                                 <p><strong>{{ ressource.name }}</strong><br><small>{{ ressource.origin }}</small></p>
-                                <p><a class="btn btn-sm btn-info bg-dark border-transparent opacity-85" href="{{ path('ressources_edit', {'id': ressource.id}) }}">Modifier</a></p>
+                                <p><a class="btn btn-sm btn-info-outline border-transparent opacity-85" href="{{ path('ressources_edit', {'id': ressource.id}) }}">Modifier</a></p>
                             </div>
 
                         {% endfor %}

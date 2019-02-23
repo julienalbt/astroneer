@@ -41,6 +41,27 @@
 
         {% block body %}
         {% endblock %}
+        {% block footer %}
+
+            <section class="section section-inverse">
+                <div class="container">
+                    <div class="col-12 col-lg-12">
+                        <ul class="nav nav-primary nav-hero">
+                            <li class="nav-item"><a class="nav-link zekton hover-primary" href="{{ path('planets_index') }}">Planètes</a></li>
+                            <li class="nav-item"><a class="nav-link zekton hover-primary" href="{{ path('ressources_index') }}">Ressources</a></li>
+                            <li class="nav-item"><a class="nav-link zekton hover-primary" href="{{ path('machines_index') }}">Machines</a></li>
+                            <li class="nav-item"><a class="nav-link zekton hover-primary" href="{{ path('objects_index') }}">Objets</a></li>
+                            <li class="nav-item"><a class="nav-link zekton hover-primary" href="{{ path('vehicles_index') }}">Véhicules</a></li>
+                        </ul>
+
+                        <hr>
+
+                        <p class="text-center opacity-70">Wiki français pour le jeu Astroneer</p>
+                    </div>
+                </div>
+            </section>
+
+        {% endblock %}
         {% block javascripts %}
             <script src="{{ asset('assets/js/jquery-3.3.1.js') }}"></script>
             <script src="{{ asset('assets/js/tether.js') }}"></script>
@@ -56,6 +77,9 @@
                     $('#ressources_whatMachines').select2();
                     $('#ressources_whatVehicles').select2();
                     $('#ressources_whatObjects').select2();
+                    $('#planets_ressourcesOnPlanet').select2();
+                    $('#vehicles_ressourcesForVehicle').select2();
+                    $('#vehicles_machineWhoCreateVehicles').select2();
                 });
             </script>
         {% endblock %}

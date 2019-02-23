@@ -6,6 +6,8 @@
 parameters:
     locale: 'fr'
     app.path.ressources_images: /assets/img/ressources
+    app.path.planets_images: /assets/img/planets
+    app.path.vehicles_images: /assets/img/vehicles
 
 services:
     # default configuration for services in *this* file
@@ -36,4 +38,12 @@ vich_uploader:
         ressources_images:
             uri_prefix: /assets/img/ressources
             upload_destination: '%kernel.project_dir%/public/assets/img/ressources'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+        planets_images:
+            uri_prefix: /assets/img/planets
+            upload_destination: '%kernel.project_dir%/public/assets/img/planets'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+        vehicles_images:
+            uri_prefix: /assets/img/vehicles
+            upload_destination: '%kernel.project_dir%/public/assets/img/vehicles'
             namer: Vich\UploaderBundle\Naming\UniqidNamer

@@ -1,11 +1,13 @@
-<!DOCTYPE html>
+{% extends 'base.html.twig' %}
 
-<title>New Planets</title>
+{% block title %}Nouvelle Planète{% endblock %}
 
 {% block body %}
-    <h1>Create new Planets</h1>
-
-    {{ include('planets/_form.html.twig') }}
-
-    <a href="{{ path('planets_index') }}">back to list</a>
+    <main class="main-content mh-fullscreen bg-img center-vh" data-parallax="{{ asset('assets/img/formPlanet.jpg') }}" data-overlay="3">
+        <div class="card card-shadowed p-50 w-700 mb-0 opacity-85" style="max-width: 100%">
+            <h5 class="text-uppercase text-center mb-50">Ajouter une planète</h5>
+            {{ include('planets/_form.html.twig') }}
+        </div>
+    </main>
 {% endblock %}
+
