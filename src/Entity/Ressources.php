@@ -92,6 +92,16 @@ private $ressourcesForRessource;
  */
 private $ressourcesCreateByRessources;
 
+/**
+ * @ORM\Column(type="boolean")
+ */
+private $isItExchangeable;
+
+/**
+ * @ORM\Column(type="boolean")
+ */
+private $isItProducible;
+
 public function __construct()
 {
 $this->whatPlanets = new ArrayCollection();
@@ -270,14 +280,14 @@ return $this->imageSize;
 
 public function getOrigin(): ?string
 {
-    return $this->origin;
+return $this->origin;
 }
 
 public function setOrigin(string $origin): self
 {
-    $this->origin = $origin;
+$this->origin = $origin;
 
-    return $this;
+return $this;
 }
 
 /**
@@ -285,25 +295,25 @@ public function setOrigin(string $origin): self
  */
 public function getRessourcesForRessource(): Collection
 {
-    return $this->ressourcesForRessource;
+return $this->ressourcesForRessource;
 }
 
 public function addRessourcesForRessource(self $ressourcesForRessource): self
 {
-    if (!$this->ressourcesForRessource->contains($ressourcesForRessource)) {
-        $this->ressourcesForRessource[] = $ressourcesForRessource;
-    }
+if (!$this->ressourcesForRessource->contains($ressourcesForRessource)) {
+$this->ressourcesForRessource[] = $ressourcesForRessource;
+}
 
-    return $this;
+return $this;
 }
 
 public function removeRessourcesForRessource(self $ressourcesForRessource): self
 {
-    if ($this->ressourcesForRessource->contains($ressourcesForRessource)) {
-        $this->ressourcesForRessource->removeElement($ressourcesForRessource);
-    }
+if ($this->ressourcesForRessource->contains($ressourcesForRessource)) {
+$this->ressourcesForRessource->removeElement($ressourcesForRessource);
+}
 
-    return $this;
+return $this;
 }
 
 /**
@@ -311,27 +321,51 @@ public function removeRessourcesForRessource(self $ressourcesForRessource): self
  */
 public function getRessourcesCreateByRessources(): Collection
 {
-    return $this->ressourcesCreateByRessources;
+return $this->ressourcesCreateByRessources;
 }
 
 public function addRessourcesCreateByRessource(self $ressourcesCreateByRessource): self
 {
-    if (!$this->ressourcesCreateByRessources->contains($ressourcesCreateByRessource)) {
-        $this->ressourcesCreateByRessources[] = $ressourcesCreateByRessource;
-        $ressourcesCreateByRessource->addRessourcesForRessource($this);
-    }
+if (!$this->ressourcesCreateByRessources->contains($ressourcesCreateByRessource)) {
+$this->ressourcesCreateByRessources[] = $ressourcesCreateByRessource;
+$ressourcesCreateByRessource->addRessourcesForRessource($this);
+}
 
-    return $this;
+return $this;
 }
 
 public function removeRessourcesCreateByRessource(self $ressourcesCreateByRessource): self
 {
-    if ($this->ressourcesCreateByRessources->contains($ressourcesCreateByRessource)) {
-        $this->ressourcesCreateByRessources->removeElement($ressourcesCreateByRessource);
-        $ressourcesCreateByRessource->removeRessourcesForRessource($this);
-    }
+if ($this->ressourcesCreateByRessources->contains($ressourcesCreateByRessource)) {
+$this->ressourcesCreateByRessources->removeElement($ressourcesCreateByRessource);
+$ressourcesCreateByRessource->removeRessourcesForRessource($this);
+}
 
-    return $this;
+return $this;
+}
+
+public function getIsItExchangeable(): ?bool
+{
+return $this->isItExchangeable;
+}
+
+public function setIsItExchangeable(bool $isItExchangeable): self
+{
+$this->isItExchangeable = $isItExchangeable;
+
+return $this;
+}
+
+public function getIsItProducible(): ?bool
+{
+return $this->isItProducible;
+}
+
+public function setIsItProducible(bool $isItProducible): self
+{
+$this->isItProducible = $isItProducible;
+
+return $this;
 }
 
 }

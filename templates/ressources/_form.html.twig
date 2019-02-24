@@ -6,8 +6,27 @@
 <div class="form-group">
     {{ form_row(form.origin, { 'attr': {'class': 'form-control'}, 'label_attr': {'class': 'fs-16 fw-600'} }) }}
 </div>
+<div class="custom-controls-stacked mt-25">
+    <label class="fs-16 fw-600 cust-check">
+        {{ form_errors(form.isItProducible) }}
+        {{ form_widget(form.isItProducible, { 'attr': {'class': 'custom-control-input'} }) }}
+        <span class="checkmark"></span>
+        <span class="custom-control-description">Est-ce productible à la centrifugeuse ?</span>
+    </label>
+</div>
+<div class="custom-controls-stacked mb-25">
+    <label class="fs-16 fw-600 cust-check">
+        {{ form_errors(form.isItExchangeable) }}
+        {{ form_widget(form.isItExchangeable, { 'attr': {'class': 'custom-control-input'} }) }}
+        <span class="checkmark"></span>
+        <span class="custom-control-description">Est-ce échangeable à la plateforme d'échange ?</span>
+    </label>
+</div>
 <div class="form-group">
     {{ form_row(form.ressourcesForRessource, { 'attr': {'class': 'form-control'}, 'label_attr': {'class': 'fs-16 fw-600'} }) }}
+</div>
+<div class="form-group">
+    {{ form_row(form.ressourcesCreateByRessources, { 'attr': {'class': 'form-control'}, 'label_attr': {'class': 'fs-16 fw-600'} }) }}
 </div>
 <div class="form-group">
     {{ form_row(form.whatPlanets, { 'attr': {'class': 'form-control'}, 'label_attr': {'class': 'fs-16 fw-600'} }) }}

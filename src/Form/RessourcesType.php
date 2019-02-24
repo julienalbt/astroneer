@@ -15,6 +15,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class RessourcesType extends AbstractType {
 
@@ -76,15 +77,15 @@ class RessourcesType extends AbstractType {
                     'download_uri' => false,
                     'image_uri' => false,
                 ])
-                ->add('origin', ChoiceType::class, array(
+                ->add('origin', ChoiceType::class, [
                     'label' => 'Provenance',
-                    'choices' => array(
+                    'choices' => [
                         'minage' => 'minage',
                         'fusion' => 'fusion',
                         'condensation atmosphérique' => 'condensation atmosphérique',
                         'chimie' => 'chimie',
-                    ),
-                ))
+                    ],
+                ])
                 ->add('ressourcesForRessource', EntityType::class, array(
                     'class' => Ressources::class,
                     'query_builder' => function (EntityRepository $er) {
@@ -96,7 +97,23 @@ class RessourcesType extends AbstractType {
                     'multiple' => 'true',
                     'required' => false,
                 ))
-        ;
+                ->add('ressourcesCreateByRessources', EntityType::class, array(
+                    'class' => Ressources::class,
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('e')
+                                ->orderBy('e.id', 'ASC');
+                    },
+                    'choice_label' => 'name',
+                    'label' => 'Quelle ressource produit celle-ci ?',
+                    'multiple' => 'true',
+                    'required' => false,
+                ))
+                ->add('isItProducible', CheckboxType::class, [
+                    'required' => false,
+                ])
+                ->add('isItExchangeable', CheckboxType::class, [
+                    'required' => false,
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver) {
