@@ -5,11 +5,12 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'fr'
-    app.path.ressources_images: /assets/img/ressources
     app.path.planets_images: /assets/img/planets
     app.path.vehicles_images: /assets/img/vehicles
     app.path.machines_images: /assets/img/machines
     app.path.objects_images: /assets/img/objects
+    upload_show_ressource_directory: '%kernel.project_dir%/public/assets/img/uploadShowRessource'
+    upload_index_ressource_directory: '%kernel.project_dir%/public/assets/img/uploadIndexRessource'
 
 services:
     # default configuration for services in *this* file
@@ -37,10 +38,6 @@ vich_uploader:
     db_driver: orm
 
     mappings:
-        ressources_images:
-            uri_prefix: /assets/img/ressources
-            upload_destination: '%kernel.project_dir%/public/assets/img/ressources'
-            namer: Vich\UploaderBundle\Naming\UniqidNamer
         planets_images:
             uri_prefix: /assets/img/planets
             upload_destination: '%kernel.project_dir%/public/assets/img/planets'

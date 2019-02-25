@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class RessourcesType extends AbstractType {
 
@@ -69,14 +70,6 @@ class RessourcesType extends AbstractType {
                     'multiple' => 'true',
                     'required' => false,
                 ))
-                ->add('imageFile', VichImageType::class, [
-                    'label' => 'Image de la ressource',
-                    'required' => false,
-                    'allow_delete' => true,
-                    'download_label' => false,
-                    'download_uri' => false,
-                    'image_uri' => false,
-                ])
                 ->add('origin', ChoiceType::class, [
                     'label' => 'Provenance',
                     'choices' => [
@@ -96,6 +89,16 @@ class RessourcesType extends AbstractType {
                     'label' => 'Pour produire quelle(s) ressource(s) ?',
                     'multiple' => 'true',
                     'required' => false,
+                ))
+                ->add('imageShowName', FileType::class, array(
+                    'label' => 'Image fiche ressource',
+                    'required' => false,
+                    'data_class' => null,
+                ))
+                ->add('imageIndexName', FileType::class, array(
+                    'label' => 'Image ressource',
+                    'required' => false,
+                    'data_class' => null,
                 ))
                 ->add('ressourcesCreateByRessources', EntityType::class, array(
                     'class' => Ressources::class,

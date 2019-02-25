@@ -20,25 +20,41 @@ class RessourcesController extends AbstractController {
      */
     public function index(RessourcesRepository $ressourcesRepository): Response {
         return $this->render('ressources/index.html.twig', [
-        'ressources' => $ressourcesRepository->findAll(),
+                    'ressources' => $ressourcesRepository->findAll(),
         ]);
-        }
+    }
 
-        /**
-         * @Route("/new", name="ressources_new", methods={"GET","POST"})
-         */
-        public function new(Request $request): Response
-        {
+    /**
+     * @Route("/new", name="ressources_new", methods={"GET","POST"})
+     */
+    public function newAction(Request $request): Response {
         $ressource = new Ressources();
         $form = $this->createForm(RessourcesType::class, $ressource);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($ressource);
-        $entityManager->flush();
 
-        return $this->redirectToRoute('ressources_index');
+            if ($ressource->getImageIndexName() != NULL) {
+                $imageIndexFile = $ressource->getImageIndexName();
+                $name = $ressource->getName();
+                $imageIndexName = $ressource->getId() . '_index_' . $ressource->str_to_noaccent($name) . '.jpg';
+                $imageIndexFile->move($this->getParameter('upload_index_ressource_directory'), $imageIndexName);
+                $ressource->setImageIndexName($imageIndexName);
+            }
+
+            if ($ressource->getImageShowName() != NULL) {
+                $imageShowFile = $ressource->getImageShowName();
+                $name = $ressource->getName();
+                $imageShowName = $ressource->getId() . '_show_' . $ressource->str_to_noaccent($name) . '.jpg';
+                $imageShowFile->move($this->getParameter('upload_show_ressource_directory'), $imageShowName);
+                $ressource->setImageShowName($imageShowName);
+            }
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($ressource);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('ressources_index');
         }
 
         return $this->render('ressources/new.html.twig', [
@@ -62,8 +78,23 @@ class RessourcesController extends AbstractController {
     public function edit(Request $request, Ressources $ressource): Response {
         $form = $this->createForm(RessourcesType::class, $ressource);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $nameIndex = $ressource->getName();
+            $imageIndexName = $ressource->getId() . '_index_' . $ressource->str_to_noaccent($nameIndex) . '.jpg';
+            $imageIndexFile = $ressource->getImageIndexName();
+            if (!empty($imageIndexFile)) {
+                $imageIndexFile->move($this->getParameter('upload_index_ressource_directory'), $imageIndexName);
+                $ressource->setImageIndexName($imageIndexName);
+            }
+            $nameShow = $ressource->getName();
+            $imageShowName = $ressource->getId() . '_index_' . $ressource->str_to_noaccent($nameShow) . '.jpg';
+            $imageShowFile = $ressource->getImageShowName();
+            if (!empty($imageShowFile)) {
+                $imageShowFile->move($this->getParameter('upload_show_ressource_directory'), $imageShowName);
+                $ressource->setImageShowName($imageShowName);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('ressources_index', [
