@@ -1,26 +1,165 @@
-<!DOCTYPE html>
+{% extends 'base.html.twig' %}
 
-<title>Machines</title>
+{% block title %}machine {{ machine.name }}{% endblock %}
 
 {% block body %}
-    <h1>Machines</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ machine.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ machine.name }}</td>
-            </tr>
-        </tbody>
-    </table>
+    {% block header %}
+        <header class="header header-inverse" style="background-image: url({{ asset('assets/img/formMachine.jpg') }});" data-overlay="4">
+            <div class="container text-center">
 
-    <a href="{{ path('machines_index') }}">back to list</a>
+                <div class="row">
+                    <div class="col-12 col-lg-8 offset-lg-2">
 
-    <a href="{{ path('machines_edit', {'id': machine.id}) }}">edit</a>
+                        <h1>{{ machine.name }}</h1>
+                        <p><a class="btn btn-lg btn-primary opacity-85" href="{{ path('machines_edit', {'id': machine.id}) }}">Modifier</a></p>
+                        <p><a class="btn btn-sm btn-secondary opacity-85" href="{{ path('machines_index') }}">Retour</a></p>
+                    </div>
+                </div>
 
-    {{ include('machines/_delete_form.html.twig') }}
+            </div>
+        </header>
+    {% endblock %}
+
+    <main class="main-content">
+
+        <section class="section">
+            <div class="container">
+                <header class="section-header">
+                    <small><strong>{{ machine.name }}</strong></small>
+                    <h2>Comment l'obtenir ?</h2>
+                    <hr>
+                    <p class="lead">
+                    {% if machine.machineWhoCreateMachines is not null %}
+                        Cette machine est imprimé par l'{{ machine.machineWhoCreateMachines.name }}.
+                        {% else %}
+                        Cette machine n'est créé par aucune autres machines.
+                        {% endif %}
+                        {% if machine.ressourcesForMachine is not empty %}<br>
+                            <strong>Ressource(s) nécessaire(s) :</strong>
+                        <ul class="d-flex flex-wrap list-unstyled justify-content-center">
+                            {% for ressourcesForMachine in machine.ressourcesForMachine %}
+                                <li class="mx-20 my-10">
+                                    <a href="{{ path('ressources_show', {'id': ressourcesForMachine.id}) }}" class="fs-16 text-dark hover-success d-flex flex-column justify-content-center">
+                                        {{ ressourcesForMachine.name }}
+                                        <img src="/assets/img/uploadIndexRessource/{{ ressourcesForMachine.imageIndexName }}" alt="{{ ressourcesForMachine.name }}" class="w-100 mx-auto">
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    </p>
+                </header>
+
+
+
+                <div class="row gap-y">
+
+                    <div class="col-12 text-center">
+                        <div>
+                            <h5>Construction de véhicule(s)</h5>
+                            {% if machine.vehiclesByMachine is not empty %}
+                                <ul class="d-flex flex-wrap justify-content-center list-unstyled">
+                                    {% for vehiclesByMachine in machine.vehiclesByMachine %}
+                                        <li class="mx-20 my-10">
+                                            <a href="{{ path('machines_show', {'id': vehiclesByMachine.id}) }}" class="fs-16 text-dark hover-success d-flex flex-column justify-content-center">
+                                                {{ vehiclesByMachine.name }}
+                                                {% if vehiclesByMachine.imageIndexName is not null %}
+                                                    <img src="/assets/img/uploadIndexVehicle/{{ vehiclesByMachine.imageIndexName }}" alt="{{ vehiclesByMachine.name }}" class="w-100 mx-auto">
+                                                {% else %}
+                                                    <img src="/assets/img/noImageYet.jpg" alt="{{ vehiclesByMachine.name }}" class="w-100 mx-auto">
+                                                {% endif %}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p>{{ machine.name }} ne produit aucun véhicule.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12 text-center">
+                        <div>
+                            <h5>Construction de machine(s)</h5>
+                            {% if machine.machinesByMachine is not empty %}
+                                <ul class="d-flex flex-wrap justify-content-center list-unstyled">
+                                    {% for machinesByMachine in machine.machinesByMachine %}
+                                        <li class="mx-20 my-10">
+                                            <a href="{{ path('machines_show', {'id': machinesByMachine.id}) }}" class="fs-16 text-dark hover-success d-flex flex-column justify-content-center">
+                                                {{ machinesByMachine.name }}
+                                                {% if machinesByMachine.imageIndexName is not null %}
+                                                    <img src="/assets/img/uploadIndexMachine/{{ machinesByMachine.imageIndexName }}" alt="{{ machinesByMachine.name }}" class="w-100 mx-auto">
+                                                {% else %}
+                                                    <img src="/assets/img/noImageYet.jpg" alt="{{ machinesByMachine.name }}" class="w-100 mx-auto">
+                                                {% endif %}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p>{{ machine.name }} ne produit aucune machine.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12 text-center">
+                        <div>
+                            <h5>Construction d'objet(s)</h5>
+                            {% if machine.objectsByMachine is not empty %}
+                                <ul class="d-flex flex-wrap justify-content-center list-unstyled">
+                                    {% for objectsByMachine in machine.objectsByMachine %}
+                                        <li class="mx-20 my-10">
+                                            <a href="{{ path('objects_show', {'id': objectsByMachine.id}) }}" class="fs-16 text-dark hover-success d-flex flex-column text-center">
+                                                {{ objectsByMachine.name }}
+                                                {% if objectsByMachine.imageIndexName is not null %}
+                                                    <img src="/assets/img/uploadIndexObject/{{ objectsByMachine.imageIndexName }}" alt="{{ objectsByMachine.name }}" class="w-100 mx-auto">
+                                                {% else %}
+                                                    <img src="/assets/img/noImageYet.jpg" alt="{{ objectsByMachine.name }}" class="w-100 mx-auto">
+                                                {% endif %}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p>{{ machine.name }} ne produit aucun objet.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12 text-center">
+                        <div>
+                            <h5>Production de ressource(s)</h5>
+                            {% if machine.ressourcesByMachine is not empty %}
+                                <ul class="d-flex flex-wrap justify-content-center list-unstyled">
+                                    {% for ressourcesByMachine in machine.ressourcesByMachine %}
+                                        <li class="mx-20 my-10">
+                                            <a href="{{ path('objects_show', {'id': ressourcesByMachine.id}) }}" class="fs-16 text-dark hover-success d-flex flex-column text-center">
+                                                {{ ressourcesByMachine.name }}
+                                                {% if ressourcesByMachine.imageIndexName is not null %}
+                                                    <img src="/assets/img/uploadIndexRessource/{{ ressourcesByMachine.imageIndexName }}" alt="{{ ressourcesByMachine.name }}" class="w-100 mx-auto">
+                                                {% else %}
+                                                    <img src="/assets/img/noImageYet.jpg" alt="{{ ressourcesByMachine.name }}" class="w-100 mx-auto">
+                                                {% endif %}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p>{{ machine.name }} ne produit aucune ressource.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-12 text-center">
+                        <br><br>
+                        {{ include('machines/_delete_form.html.twig') }}
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
 {% endblock %}

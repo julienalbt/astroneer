@@ -1,26 +1,70 @@
-<!DOCTYPE html>
+{% extends 'base.html.twig' %}
 
-<title>Planets</title>
+{% block title %}Planète {{ planet.name }}{% endblock %}
 
 {% block body %}
-    <h1>Planets</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ planet.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ planet.name }}</td>
-            </tr>
-        </tbody>
-    </table>
+    {% block header %}
+        <header class="header header-inverse" style="background-image: url({{ asset('assets/img/formPlanet.jpg') }});" data-overlay="4">
+            <div class="container text-center">
 
-    <a href="{{ path('planets_index') }}">back to list</a>
+                <div class="row">
+                    <div class="col-12 col-lg-8 offset-lg-2">
 
-    <a href="{{ path('planets_edit', {'id': planet.id}) }}">edit</a>
+                        <h1>{{ planet.name }}</h1>
+                        <p><a class="btn btn-lg btn-primary opacity-85" href="{{ path('planets_edit', {'id': planet.id}) }}">Modifier</a></p>
+                        <p><a class="btn btn-sm btn-secondary opacity-85" href="{{ path('planets_index') }}">Retour</a></p>
+                    </div>
+                </div>
 
-    {{ include('planets/_delete_form.html.twig') }}
+            </div>
+        </header>
+    {% endblock %}
+
+    <main class="main-content">
+
+        <section class="section">
+            <div class="container">
+                <header class="section-header">
+                    <small><strong>{{ planet.name }}</strong></small>
+                    <h2>Propriétés de la planète</h2>
+                    <hr>
+                </header>
+
+                    <div class="row gap-y">
+
+                    <div class="col-12 offset-md-2 col-md-8 mb-30">
+                        <img src="/assets/img/uploadShowPlanet/{{ planet.imageShowName }}" alt="..." data-aos="fade-up" data-aos-duration="2000">
+                    </div>
+                    
+                    <div class="col-12 text-center">
+                        <div>
+                            <h5>Quelle(s) ressources sur cette planète ?</h5>
+                            {% if planet.ressourcesOnPlanet is not empty %}
+                                <ul class="d-flex flex-wrap justify-content-center list-unstyled">
+                                    {% for ressourcesOnPlanet in planet.ressourcesOnPlanet %}
+                                        <li class="mx-20 my-10">
+                                            <a href="{{ path('ressources_show', {'id': ressourcesOnPlanet.id}) }}" class="fs-16 text-dark hover-success d-flex flex-column justify-content-center">
+                                                {{ ressourcesOnPlanet.name }}
+                                                <img src="/assets/img/uploadIndexRessource/{{ ressourcesOnPlanet.imageIndexName }}" alt="{{ ressourcesOnPlanet.name }}" class="w-100 mx-auto">
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-12 text-center">
+                        <br><br>
+                        {{ include('planets/_delete_form.html.twig') }}
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
 {% endblock %}

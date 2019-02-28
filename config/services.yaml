@@ -11,6 +11,14 @@ parameters:
     app.path.objects_images: /assets/img/objects
     upload_show_ressource_directory: '%kernel.project_dir%/public/assets/img/uploadShowRessource'
     upload_index_ressource_directory: '%kernel.project_dir%/public/assets/img/uploadIndexRessource'
+    upload_show_planet_directory: '%kernel.project_dir%/public/assets/img/uploadShowPlanet'
+    upload_index_planet_directory: '%kernel.project_dir%/public/assets/img/uploadIndexPlanet'
+    upload_show_object_directory: '%kernel.project_dir%/public/assets/img/uploadShowObject'
+    upload_index_object_directory: '%kernel.project_dir%/public/assets/img/uploadIndexObject'
+    upload_show_machine_directory: '%kernel.project_dir%/public/assets/img/uploadShowMachine'
+    upload_index_machine_directory: '%kernel.project_dir%/public/assets/img/uploadIndexMachine'
+    upload_show_vehicle_directory: '%kernel.project_dir%/public/assets/img/uploadShowVehicle'
+    upload_index_vehicle_directory: '%kernel.project_dir%/public/assets/img/uploadIndexVehicle'
 
 services:
     # default configuration for services in *this* file

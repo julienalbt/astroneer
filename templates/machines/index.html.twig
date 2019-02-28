@@ -39,7 +39,7 @@
                         {% for machine in machines %}
 
                             <div class="col-6 col-md-4" data-shuffle="item" data-groups="{% if machine.machineWhoCreateMachines == null %}{% else %}{{ machine.machineWhoCreateMachines.name }}{% endif %}">
-                                <p><a href="{{ path('machines_show', {'id': machine.id}) }}"><img src="/assets/img/machines/{{ machine.imageName }}" alt="{{ machine.name }}" class="w-150"></a></p>
+                                <p><a href="{{ path('machines_show', {'id': machine.id}) }}"><img src="/assets/img/uploadIndexMachine/{{ machine.imageIndexName }}" alt="{{ machine.name }}" class="w-150"></a></p>
                                 <p><strong>{{ machine.name }}</strong></p>
                                 <p><a class="btn btn-sm btn-info-outline border-transparent opacity-85" href="{{ path('machines_edit', {'id': machine.id}) }}">Modifier</a></p>
                             </div>

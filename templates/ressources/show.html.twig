@@ -4,185 +4,205 @@
 
 {% block body %}
 
-    {% block header %}
-        <header class="header header-inverse" style="background-image: url({{ asset('assets/img/formRessource.jpg') }});" data-overlay="4">
-            <div class="container text-center">
+{% block header %}
+<header class="header header-inverse" style="background-image: url({{ asset('assets/img/formRessource.jpg') }});"
+    data-overlay="4">
+    <div class="container text-center">
 
-                <div class="row">
-                    <div class="col-12 col-lg-8 offset-lg-2">
+        <div class="row">
+            <div class="col-12 col-lg-8 offset-lg-2">
 
-                        <h1>{{ ressource.name }}</h1>
-                        <p><a class="btn btn-lg btn-primary opacity-85" href="{{ path('ressources_edit', {'id': ressource.id}) }}">Modifier</a></p>
-                        <p><a class="btn btn-sm btn-secondary opacity-85" href="{{ path('ressources_index') }}">Retour</a></p>
-                    </div>
+                <h1>{{ ressource.name }}</h1>
+                <p><a class="btn btn-lg btn-primary opacity-85" href="{{ path('ressources_edit', {'id': ressource.id}) }}">Modifier</a></p>
+                <p><a class="btn btn-sm btn-secondary opacity-85" href="{{ path('ressources_index') }}">Retour</a></p>
+            </div>
+        </div>
+
+    </div>
+</header>
+{% endblock %}
+
+<main class="main-content">
+
+    <section class="section">
+        <div class="container">
+            <header class="section-header">
+                <small><strong>{{ ressource.name }}</strong></small>
+                <h2>Comment l'obtenir ?</h2>
+                <hr>
+                <p class="lead">
+                    {% if ressource.origin == 'recyclage' %}
+                    Obtenu par {{ ressource.origin }} de détritus avec un broyeur. Elle constitue la monnaie d'échange à la plateforme d'échange.
+                    {% else %}
+                    Obtenu par {{ ressource.origin }}{% if ressource.isItExchangeable == 1 and ressource.isItProducible
+                    == 1 %}, via la plateforme d'échange et la centrifugeuse de terre.{% elseif
+                    ressource.isItExchangeable == 0 and ressource.isItProducible == 0 %}.{% elseif
+                    ressource.isItExchangeable == 1 and ressource.isItProducible == 0 %} et via la plateforme
+                    d'échange.{% elseif ressource.isItExchangeable == 0 and ressource.isItProducible == 1 %} et via la
+                    centrifugeuse de terre.{% endif %}
+                    {% endif %}
+                    {% if ressource.ressourcesCreateByRessources is not empty %}<br>
+                    <strong>Ressource(s) nécessaire(s) :</strong>
+                    <ul class="d-flex flex-wrap list-unstyled justify-content-center">
+                        {% for ressourcesCreateByRessources in ressource.ressourcesCreateByRessources %}
+                        <li class="mx-20 my-10">
+                            <a href="{{ path('ressources_show', {'id': ressourcesCreateByRessources.id}) }}" class="fs-16 text-dark hover-success d-flex flex-column justify-content-center">
+                                {{ ressourcesCreateByRessources.name }}
+                                <img src="/assets/img/uploadIndexRessource/{{ ressourcesCreateByRessources.imageIndexName }}"
+                                    alt="{{ ressourcesCreateByRessources.name }}" class="w-100 mx-auto">
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </p>
+            </header>
+
+
+
+            <div class="row gap-y">
+
+                <div class="col-12 offset-md-2 col-md-8 mb-30">
+                    <img src="/assets/img/uploadShowRessource/{{ ressource.imageShowName }}" alt="..." data-aos="fade-up"
+                        data-aos-duration="2000">
                 </div>
 
-            </div>
-        </header>
-    {% endblock %}
-
-    <main class="main-content">
-
-        <section class="section">
-            <div class="container">
-                <header class="section-header">
-                    <small><strong>{{ ressource.name }}</strong></small>
-                    <h2>Comment l'obtenir ?</h2>
-                    <hr>
-                    <p class="lead">
-                        Obtenu par {{ ressource.origin }}{% if ressource.isItExchangeable == 1 and ressource.isItProducible == 1 %}, via la plateforme d'échange et la centrifugeuse de terre.{% elseif ressource.isItExchangeable == 0 and ressource.isItProducible == 0 %}.{% elseif ressource.isItExchangeable == 1 and ressource.isItProducible == 0 %} et via la plateforme d'échange.{% elseif ressource.isItExchangeable == 0 and ressource.isItProducible == 1 %} et via la centrifugeuse de terre.{% endif %}
-                        {% if ressource.ressourcesCreateByRessources is not empty %}<br>
-                            <strong>Ressource(s) nécessaire(s) :</strong>
-                        <ul class="d-flex flex-wrap list-unstyled justify-content-center">
-                            {% for ressourcesCreateByRessources in ressource.ressourcesCreateByRessources %}
-                                <li class="mx-20 my-10">
-                                    <a href="{{ path('ressources_show', {'id': ressourcesCreateByRessources.id}) }}" class="fs-16 text-dark hover-success d-flex flex-column justify-content-center">
-                                        {{ ressourcesCreateByRessources.name }}
-                                        <img src="/assets/img/ressources/{{ ressourcesCreateByRessources.imageName }}" alt="{{ ressourcesCreateByRessources.name }}" class="w-100 mx-auto">
-                                    </a>
-                                </li>
+                <div class="col-12 text-center">
+                    <div>
+                        <h5>Sur quelle(s) planète(s) ?</h5>
+                        {% if ressource.whatPlanets is not empty %}
+                        <ul class="d-flex flex-wrap justify-content-center list-unstyled">
+                            {% for whatPlanets in ressource.whatPlanets %}
+                            <li class="mx-20 my-10">
+                                <a href="{{ path('planets_show', {'id': whatPlanets.id}) }}" class="fs-16 text-dark hover-success d-flex flex-column justify-content-center">
+                                    {{ whatPlanets.name }}
+                                    <img src="/assets/img/uploadIndexPlanet/{{ whatPlanets.imageIndexName }}" alt="{{ whatPlanets.name }}"
+                                        class="w-100 mx-auto">
+                                </a>
+                            </li>
                             {% endfor %}
                         </ul>
-                    {% endif %}
-                    </p>
-                </header>
-
-
-
-                <div class="row gap-y">
-
-                    <div class="col-12 offset-md-2 col-md-8 mb-30">
-                        <img src="/assets/img/uploadShowRessource/{{ ressource.imageShowName }}" alt="..." data-aos="fade-up" data-aos-duration="2000">
-                    </div>
-
-                    <div class="col-12 text-center">
-                        <div>
-                            <h5>Sur quelle(s) planète(s) ?</h5>
-                            {% if ressource.whatPlanets is not empty %}
-                                <ul class="d-flex flex-wrap justify-content-center list-unstyled">
-                                    {% for whatPlanets in ressource.whatPlanets %}
-                                        <li class="mx-20 my-10">
-                                            <a href="{{ path('planets_show', {'id': whatPlanets.id}) }}" class="fs-16 text-dark hover-success d-flex flex-column justify-content-center">
-                                                {{ whatPlanets.name }}
-                                                <img src="/assets/img/planets/{{ whatPlanets.imageName }}" alt="{{ whatPlanets.name }}" class="w-100 mx-auto">
-                                            </a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <p>{{ ressource.name }} ne peut pas être trouvé tel quel sur une planète
-                                    mais peut-être obtenu par{% if ressource.origin == 'fusion' %} fusion d'une autre ressources.{% elseif ressource.origin == 'chimie' %} chimie via le labo.{% endif %}
-                                </p>
+                        {% else %}
+                        <p>{{ ressource.name }} ne peut pas être trouvé tel quel sur une planète
+                            mais peut-être obtenu par{% if ressource.origin == 'fusion' %} fusion d'une autre
+                            ressources.{% elseif ressource.origin == 'chimie' %} chimie via le labo.{% elseif ressource.origin == 'recyclage' %}
+                             recyclage de détritus, qui sont quant à eux éparpillés sur toutes les planètes.
                             {% endif %}
-                            </p>
-                        </div>
+                        </p>
+                        {% endif %}
+                        </p>
                     </div>
+                </div>
 
-                    <div class="col-12 text-center">
-                        <div>
-                            <h5>Construction de véhicule(s)</h5>
-                            {% if ressource.whatVehicles is not empty %}
-                                <ul class="d-flex flex-wrap justify-content-center list-unstyled">
-                                    {% for whatVehicles in ressource.whatVehicles %}
-                                        <li class="mx-20 my-10">
-                                            <a href="{{ path('vehicles_show', {'id': whatVehicles.id}) }}" class="fs-16 text-dark hover-success d-flex flex-column justify-content-center">
-                                                {{ whatVehicles.name }}
-                                                {% if whatVehicles.imageName is not null %}
-                                                    <img src="/assets/img/vehicles/{{ whatVehicles.imageName }}" alt="{{ whatVehicles.name }}" class="w-100 mx-auto">
-                                                {% else %}
-                                                    <img src="/assets/img/noImageYet.jpg" alt="{{ whatVehicles.name }}" class="w-100 mx-auto">
-                                                {% endif %}
-                                            </a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <p>{{ ressource.name }} n'est nécessaire pour aucun véhicule.</p>
-                            {% endif %}
-                        </div>
+                <div class="col-12 text-center">
+                    <div>
+                        <h5>Construction de véhicule(s)</h5>
+                        {% if ressource.whatVehicles is not empty %}
+                        <ul class="d-flex flex-wrap justify-content-center list-unstyled">
+                            {% for whatVehicles in ressource.whatVehicles %}
+                            <li class="mx-20 my-10">
+                                <a href="{{ path('vehicles_show', {'id': whatVehicles.id}) }}" class="fs-16 text-dark hover-success d-flex flex-column justify-content-center">
+                                    {{ whatVehicles.name }}
+                                    {% if whatVehicles.imageIndexName is not null %}
+                                    <img src="/assets/img/uploadIndexVehicle/{{ whatVehicles.imageIndexName }}" alt="{{ whatVehicles.name }}"
+                                        class="w-100 mx-auto">
+                                    {% else %}
+                                    <img src="/assets/img/noImageYet.jpg" alt="{{ whatVehicles.name }}" class="w-100 mx-auto">
+                                    {% endif %}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p>{{ ressource.name }} n'est nécessaire pour aucun véhicule.</p>
+                        {% endif %}
                     </div>
+                </div>
 
-                    <div class="col-12 text-center">
-                        <div>
-                            <h5>Construction de machine(s)</h5>
-                            {% if ressource.whatMachines is not empty %}
-                                <ul class="d-flex flex-wrap justify-content-center list-unstyled">
-                                    {% for whatMachines in ressource.whatMachines %}
-                                        <li class="mx-20 my-10">
-                                            <a href="{{ path('machines_show', {'id': whatMachines.id}) }}" class="fs-16 text-dark hover-success d-flex flex-column justify-content-center">
-                                                {{ whatMachines.name }}
-                                                {% if whatMachines.imageName is not null %}
-                                                    <img src="/assets/img/machines/{{ whatMachines.imageName }}" alt="{{ whatMachines.name }}" class="w-100 mx-auto">
-                                                {% else %}
-                                                    <img src="/assets/img/noImageYet.jpg" alt="{{ whatMachines.name }}" class="w-100 mx-auto">
-                                                {% endif %}
-                                            </a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <p>{{ ressource.name }} n'est nécessaire pour aucune machine.</p>
-                            {% endif %}
-                        </div>
+                <div class="col-12 text-center">
+                    <div>
+                        <h5>Construction de machine(s)</h5>
+                        {% if ressource.whatMachines is not empty %}
+                        <ul class="d-flex flex-wrap justify-content-center list-unstyled">
+                            {% for whatMachines in ressource.whatMachines %}
+                            <li class="mx-20 my-10">
+                                <a href="{{ path('machines_show', {'id': whatMachines.id}) }}" class="fs-16 text-dark hover-success d-flex flex-column justify-content-center">
+                                    {{ whatMachines.name }}
+                                    {% if whatMachines.imageIndexName is not null %}
+                                    <img src="/assets/img/uploadIndexMachine/{{ whatMachines.imageIndexName }}" alt="{{ whatMachines.name }}"
+                                        class="w-100 mx-auto">
+                                    {% else %}
+                                    <img src="/assets/img/noImageYet.jpg" alt="{{ whatMachines.name }}" class="w-100 mx-auto">
+                                    {% endif %}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p>{{ ressource.name }} n'est nécessaire pour aucune machine.</p>
+                        {% endif %}
                     </div>
+                </div>
 
-                    <div class="col-12 text-center">
-                        <div>
-                            <h5>Construction d'objet(s)</h5>
-                            {% if ressource.whatObjects is not empty %}
-                                <ul class="d-flex flex-wrap justify-content-center list-unstyled">
-                                    {% for whatObjects in ressource.whatObjects %}
-                                        <li class="mx-20 my-10">
-                                            <a href="{{ path('objects_show', {'id': whatObjects.id}) }}" class="fs-16 text-dark hover-success d-flex flex-column text-center">
-                                                {{ whatObjects.name }}
-                                                {% if whatObjects.imageName is not null %}
-                                                    <img src="/assets/img/objects/{{ whatObjects.imageName }}" alt="{{ whatObjects.name }}" class="w-100 mx-auto">
-                                                {% else %}
-                                                    <img src="/assets/img/noImageYet.jpg" alt="{{ whatObjects.name }}" class="w-100 mx-auto">
-                                                {% endif %}
-                                            </a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <p>{{ ressource.name }} n'est nécessaire pour aucun objet.</p>
-                            {% endif %}
-                        </div>
+                <div class="col-12 text-center">
+                    <div>
+                        <h5>Construction d'objet(s)</h5>
+                        {% if ressource.whatObjects is not empty %}
+                        <ul class="d-flex flex-wrap justify-content-center list-unstyled">
+                            {% for whatObjects in ressource.whatObjects %}
+                            <li class="mx-20 my-10">
+                                <a href="{{ path('objects_show', {'id': whatObjects.id}) }}" class="fs-16 text-dark hover-success d-flex flex-column text-center">
+                                    {{ whatObjects.name }}
+                                    {% if whatObjects.imageIndexName is not null %}
+                                    <img src="/assets/img/uploadIndexObject/{{ whatObjects.imageIndexName }}" alt="{{ whatObjects.name }}"
+                                        class="w-100 mx-auto">
+                                    {% else %}
+                                    <img src="/assets/img/noImageYet.jpg" alt="{{ whatObjects.name }}" class="w-100 mx-auto">
+                                    {% endif %}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p>{{ ressource.name }} n'est nécessaire pour aucun objet.</p>
+                        {% endif %}
                     </div>
+                </div>
 
-                    <div class="col-12 text-center">
-                        <div>
-                            <h5>Production de ressource(s)</h5>
-                            {% if ressource.ressourcesForRessource is not empty %}
-                                <ul class="d-flex flex-wrap justify-content-center list-unstyled">
-                                    {% for ressourcesForRessource in ressource.ressourcesForRessource %}
-                                        <li class="mx-20 my-10">
-                                            <a href="{{ path('ressources_show', {'id': ressourcesForRessource.id}) }}" class="fs-16 text-dark hover-success d-flex flex-column justify-content-center">
-                                                {{ ressourcesForRessource.name }}
-                                                {% if ressourcesForRessource.imageIndexName is not null %}
-                                                    <img src="/assets/img/uploadIndexRessource/{{ ressourcesForRessource.imageIndexName }}" alt="{{ ressourcesForRessource.name }}" class="w-100 mx-auto">
-                                                {% else %}
-                                                    <img src="/assets/img/noImageYet.jpg" alt="{{ ressourcesForRessource.name }}" class="w-100 mx-auto">
-                                                {% endif %}
-                                            </a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <p>{{ ressource.name }} n'est nécessaire pour aucune ressource.</p>
-                            {% endif %}
-                        </div>
+                <div class="col-12 text-center">
+                    <div>
+                        <h5>Production de ressource(s)</h5>
+                        {% if ressource.ressourcesForRessource is not empty %}
+                        <ul class="d-flex flex-wrap justify-content-center list-unstyled">
+                            {% for ressourcesForRessource in ressource.ressourcesForRessource %}
+                            <li class="mx-20 my-10">
+                                <a href="{{ path('ressources_show', {'id': ressourcesForRessource.id}) }}" class="fs-16 text-dark hover-success d-flex flex-column justify-content-center">
+                                    {{ ressourcesForRessource.name }}
+                                    {% if ressourcesForRessource.imageIndexName is not null %}
+                                    <img src="/assets/img/uploadIndexRessource/{{ ressourcesForRessource.imageIndexName }}"
+                                        alt="{{ ressourcesForRessource.name }}" class="w-100 mx-auto">
+                                    {% else %}
+                                    <img src="/assets/img/noImageYet.jpg" alt="{{ ressourcesForRessource.name }}" class="w-100 mx-auto">
+                                    {% endif %}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p>{{ ressource.name }} n'est nécessaire pour aucune ressource.</p>
+                        {% endif %}
                     </div>
+                </div>
 
-                    <div class="col-12 text-center">
-                        <br><br>
-                        {{ include('ressources/_delete_form.html.twig') }}
-                    </div>
-
+                <div class="col-12 text-center">
+                    <br><br>
+                    {{ include('ressources/_delete_form.html.twig') }}
                 </div>
 
             </div>
-        </section>
 
-    </main>
+        </div>
+    </section>
+
+</main>
 {% endblock %}

@@ -30,7 +30,7 @@
                     {% for planet in planets %}
 
                         <div class="col-6 col-md-4 col-lg-3">
-                            <p><a href="{{ path('planets_show', {'id': planet.id}) }}"><img src="/assets/img/planets/{{ planet.imageName }}" alt="{{ planet.name }}" class="w-150"></a></p>
+                            <p><a href="{{ path('planets_show', {'id': planet.id}) }}"><img src="/assets/img/uploadIndexPlanet/{{ planet.imageIndexName }}" alt="{{ planet.name }}" class="w-150"></a></p>
                             <p><strong>{{ planet.name }}</strong></p>
                             <p><a class="btn btn-sm btn-info-outline border-transparent opacity-85" href="{{ path('planets_edit', {'id': planet.id}) }}">Modifier</a></p>
                         </div>

@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class PlanetsType extends AbstractType {
 
@@ -31,14 +31,16 @@ class PlanetsType extends AbstractType {
                     'multiple' => 'true',
                     'required' => false,
                 ))
-                ->add('imageFile', VichImageType::class, [
-                    'label' => 'Image de la planète',
+                ->add('imageShowName', FileType::class, array(
+                    'label' => 'Image fiche planète',
                     'required' => false,
-                    'allow_delete' => true,
-                    'download_label' => false,
-                    'download_uri' => false,
-                    'image_uri' => false,
-                ])
+                    'data_class' => null,
+                ))
+                ->add('imageIndexName', FileType::class, array(
+                    'label' => 'Image planète',
+                    'required' => false,
+                    'data_class' => null,
+                ))
         ;
     }
 

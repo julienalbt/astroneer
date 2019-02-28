@@ -5,8 +5,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RessourcesRepository")
@@ -72,13 +72,20 @@ private $isItProducible;
 
 /**
  * @ORM\Column(type="string", length=255, nullable=true)
+ * @Assert\File(mimeTypes={ "image/jpeg" })
  */
 private $imageShowName;
 
 /**
  * @ORM\Column(type="string", length=255, nullable=true)
+ * @Assert\File(mimeTypes={ "image/jpeg" })
  */
 private $imageIndexName;
+
+/**
+ * @ORM\ManyToMany(targetEntity="App\Entity\Machines", mappedBy="ressourcesByMachine")
+ */
+private $ressourcesCreatedByMachine;
 
 public function __construct()
 {
@@ -88,6 +95,7 @@ $this->whatObjects = new ArrayCollection();
 $this->whatMachines = new ArrayCollection();
 $this->ressourcesForRessource = new ArrayCollection();
 $this->ressourcesCreateByRessources = new ArrayCollection();
+$this->ressourcesCreatedByMachine = new ArrayCollection();
 }
 
 public function getId(): ?int
@@ -343,6 +351,34 @@ $url = preg_replace('#ý|ÿ#', 'y', $url);
 $url = preg_replace('#Ý#', 'Y', $url);
 
 return ($url);
+}
+
+/**
+ * @return Collection|Machines[]
+ */
+public function getRessourcesCreatedByMachine(): Collection
+{
+    return $this->ressourcesCreatedByMachine;
+}
+
+public function addRessourcesCreatedByMachine(Machines $ressourcesCreatedByMachine): self
+{
+    if (!$this->ressourcesCreatedByMachine->contains($ressourcesCreatedByMachine)) {
+        $this->ressourcesCreatedByMachine[] = $ressourcesCreatedByMachine;
+        $ressourcesCreatedByMachine->addRessourcesByMachine($this);
+    }
+
+    return $this;
+}
+
+public function removeRessourcesCreatedByMachine(Machines $ressourcesCreatedByMachine): self
+{
+    if ($this->ressourcesCreatedByMachine->contains($ressourcesCreatedByMachine)) {
+        $this->ressourcesCreatedByMachine->removeElement($ressourcesCreatedByMachine);
+        $ressourcesCreatedByMachine->removeRessourcesByMachine($this);
+    }
+
+    return $this;
 }
 
 }

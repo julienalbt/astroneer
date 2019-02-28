@@ -7,12 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Vich\UploaderBundle\Entity\File as EmbeddedFile;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MachinesRepository")
- * @Vich\Uploadable
  */
 class Machines
 {
@@ -55,33 +52,19 @@ private $machineWhoCreateMachines;
 private $machinesByMachine;
 
 /**
- *
- * @Vich\UploadableField(mapping="machines_images", fileNameProperty="imageName", size="imageSize")
- *
- * @var File
+ * @ORM\Column(type="string", length=255, nullable=true)
  */
-private $imageFile;
+private $imageShowName;
 
 /**
- * @ORM\Column(type="string", length=100, nullable=true)
- *
- * @var string
+ * @ORM\Column(type="string", length=255, nullable=true)
  */
-private $imageName;
+private $imageIndexName;
 
 /**
- * @ORM\Column(type="integer", nullable=true)
- *
- * @var integer
+ * @ORM\ManyToMany(targetEntity="App\Entity\Ressources", inversedBy="ressourcesCreatedByMachine")
  */
-private $imageSize;
-
-/**
- * @ORM\Column(type="datetime", nullable=true)
- *
- * @var \DateTime
- */
-private $updatedAt;
+private $ressourcesByMachine;
 
 public function __construct()
 {
@@ -89,6 +72,7 @@ $this->ressourcesForMachine = new ArrayCollection();
 $this->vehiclesByMachine = new ArrayCollection();
 $this->objectsByMachine = new ArrayCollection();
 $this->machinesByMachine = new ArrayCollection();
+$this->ressourcesByMachine = new ArrayCollection();
 }
 
 public function getId(): ?int
@@ -241,49 +225,74 @@ $machinesByMachine->setMachineWhoCreateMachines(null);
 return $this;
 }
 
+public function getImageShowName()
+{
+    return $this->imageShowName;
+}
+
+public function setImageShowName($imageShowName)
+{
+    $this->imageShowName = $imageShowName;
+
+    return $this;
+}
+
+public function getImageIndexName()
+{
+    return $this->imageIndexName;
+}
+
+public function setImageIndexName($imageIndexName)
+{
+    $this->imageIndexName = $imageIndexName;
+
+    return $this;
+}
+
+function str_to_noaccent($str) {
+$url = $str;
+$url = preg_replace('#Ç#', 'C', $url);
+$url = preg_replace('#ç#', 'c', $url);
+$url = preg_replace('#è|é|ê|ë#', 'e', $url);
+$url = preg_replace('#È|É|Ê|Ë#', 'E', $url);
+$url = preg_replace('#à|á|â|ã|ä|å#', 'a', $url);
+$url = preg_replace('#@|À|Á|Â|Ã|Ä|Å#', 'A', $url);
+$url = preg_replace('#ì|í|î|ï#', 'i', $url);
+$url = preg_replace('#Ì|Í|Î|Ï#', 'I', $url);
+$url = preg_replace('#ð|ò|ó|ô|õ|ö#', 'o', $url);
+$url = preg_replace('#Ò|Ó|Ô|Õ|Ö#', 'O', $url);
+$url = preg_replace('#ù|ú|û|ü#', 'u', $url);
+$url = preg_replace('#Ù|Ú|Û|Ü#', 'U', $url);
+$url = preg_replace('#ý|ÿ#', 'y', $url);
+$url = preg_replace('#Ý#', 'Y', $url);
+
+return ($url);
+}
+
 /**
- * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
- * of 'UploadedFile' is injected into this setter to trigger the update. If this
- * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
- * must be able to accept an instance of 'File' as the bundle will inject one here
- * during Doctrine hydration.
- *
- * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
+ * @return Collection|Ressources[]
  */
-public function setImageFile(?File $imageFile = null): void
+public function getRessourcesByMachine(): Collection
 {
-$this->imageFile = $imageFile;
-
-if (null !== $imageFile) {
-// It is required that at least one field changes if you are using doctrine
-// otherwise the event listeners won't be called and the file is lost
-$this->updatedAt = new \DateTimeImmutable();
-}
+    return $this->ressourcesByMachine;
 }
 
-public function getImageFile(): ?File
+public function addRessourcesByMachine(Ressources $ressourcesByMachine): self
 {
-return $this->imageFile;
+    if (!$this->ressourcesByMachine->contains($ressourcesByMachine)) {
+        $this->ressourcesByMachine[] = $ressourcesByMachine;
+    }
+
+    return $this;
 }
 
-public function setImageName(?string $imageName): void
+public function removeRessourcesByMachine(Ressources $ressourcesByMachine): self
 {
-$this->imageName = $imageName;
-}
+    if ($this->ressourcesByMachine->contains($ressourcesByMachine)) {
+        $this->ressourcesByMachine->removeElement($ressourcesByMachine);
+    }
 
-public function getImageName(): ?string
-{
-return $this->imageName;
-}
-
-public function setImageSize(?int $imageSize): void
-{
-$this->imageSize = $imageSize;
-}
-
-public function getImageSize(): ?int
-{
-return $this->imageSize;
+    return $this;
 }
 
 }

@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class VehiclesType extends AbstractType {
 
@@ -42,14 +42,16 @@ class VehiclesType extends AbstractType {
                     'label' => 'Quelle machine produit ce véhicule ?',
                     'required' => false,
                 ))
-                ->add('imageFile', VichImageType::class, [
-                    'label' => 'Image du véhicule',
+                ->add('imageShowName', FileType::class, array(
+                    'label' => 'Image fiche véhicule',
                     'required' => false,
-                    'allow_delete' => true,
-                    'download_label' => false,
-                    'download_uri' => false,
-                    'image_uri' => false,
-                ])
+                    'data_class' => null,
+                ))
+                ->add('imageIndexName', FileType::class, array(
+                    'label' => 'Image véhicule',
+                    'required' => false,
+                    'data_class' => null,
+                ))
         ;
     }
 

@@ -29,25 +29,31 @@ class RessourcesController extends AbstractController {
      */
     public function newAction(Request $request): Response {
         $ressource = new Ressources();
+        $ressource->setImageIndexName($ressource->getImageIndexName());
+        $imgIndexOri = \basename($ressource->getImageIndexName());
+        $ressource->setImageShowName($ressource->getImageShowName());
+        $imgShowOri = \basename($ressource->getImageShowName());
         $form = $this->createForm(RessourcesType::class, $ressource);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
-
-            if ($ressource->getImageIndexName() != NULL) {
-                $imageIndexFile = $ressource->getImageIndexName();
-                $name = $ressource->getName();
-                $imageIndexName = $ressource->getId() . '_index_' . $ressource->str_to_noaccent($name) . '.jpg';
-                $imageIndexFile->move($this->getParameter('upload_index_ressource_directory'), $imageIndexName);
-                $ressource->setImageIndexName($imageIndexName);
+            
+            if ($ressource->getImageIndexName()) {
+                $file = $ressource->getImageIndexName();
+                $fileName = $this->generateUniqueFileName() . '.jpg';
+                $file->move($this->getParameter('upload_index_ressource_directory'), $fileName);
+                $ressource->setImageIndexName($fileName);
+            } else {
+                $ressource->setImageIndexName($imgIndexOri);
             }
-
-            if ($ressource->getImageShowName() != NULL) {
-                $imageShowFile = $ressource->getImageShowName();
-                $name = $ressource->getName();
-                $imageShowName = $ressource->getId() . '_show_' . $ressource->str_to_noaccent($name) . '.jpg';
-                $imageShowFile->move($this->getParameter('upload_show_ressource_directory'), $imageShowName);
-                $ressource->setImageShowName($imageShowName);
+            
+            if ($ressource->getImageShowName()) {
+                $file2 = $ressource->getImageShowName();
+                $fileName2 = $this->generateUniqueFileName() . '.jpg';
+                $file2->move($this->getParameter('upload_show_ressource_directory'), $fileName2);
+                $ressource->setImageShowName($fileName2);
+            } else {
+                $ressource->setImageShowName($imgShowOri);
             }
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -76,23 +82,32 @@ class RessourcesController extends AbstractController {
      * @Route("/{id}/edit", name="ressources_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Ressources $ressource): Response {
+        $ressource->setImageIndexName($ressource->getImageIndexName());
+        $imgIndexOri = \basename($ressource->getImageIndexName());
+        $ressource->setImageShowName($ressource->getImageShowName());
+        $imgShowOri = \basename($ressource->getImageShowName());
+        
         $form = $this->createForm(RessourcesType::class, $ressource);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $nameIndex = $ressource->getName();
-            $imageIndexName = $ressource->getId() . '_index_' . $ressource->str_to_noaccent($nameIndex) . '.jpg';
-            $imageIndexFile = $ressource->getImageIndexName();
-            if (!empty($imageIndexFile)) {
-                $imageIndexFile->move($this->getParameter('upload_index_ressource_directory'), $imageIndexName);
-                $ressource->setImageIndexName($imageIndexName);
+            if ($ressource->getImageIndexName()) {
+                $file = $ressource->getImageIndexName();
+                $fileName = $this->generateUniqueFileName() . '.jpg';
+                $file->move($this->getParameter('upload_index_ressource_directory'), $fileName);
+                $ressource->setImageIndexName($fileName);
+            } else {
+                $ressource->setImageIndexName($imgIndexOri);
             }
-            $nameShow = $ressource->getName();
-            $imageShowName = $ressource->getId() . '_index_' . $ressource->str_to_noaccent($nameShow) . '.jpg';
-            $imageShowFile = $ressource->getImageShowName();
-            if (!empty($imageShowFile)) {
-                $imageShowFile->move($this->getParameter('upload_show_ressource_directory'), $imageShowName);
-                $ressource->setImageShowName($imageShowName);
+            
+            if ($ressource->getImageShowName()) {
+                $file2 = $ressource->getImageShowName();
+                $fileName2 = $this->generateUniqueFileName() . '.jpg';
+                $file2->move($this->getParameter('upload_show_ressource_directory'), $fileName2);
+                $ressource->setImageShowName($fileName2);
+            } else {
+                $ressource->setImageShowName($imgShowOri);
             }
 
             $this->getDoctrine()->getManager()->flush();
@@ -119,6 +134,13 @@ class RessourcesController extends AbstractController {
         }
 
         return $this->redirectToRoute('ressources_index');
+    }
+    
+    private function generateUniqueFileName()
+    {
+        // md5() reduces the similarity of the file names generated by
+        // uniqid(), which is based on timestamps
+        return md5(uniqid());
     }
 
 }

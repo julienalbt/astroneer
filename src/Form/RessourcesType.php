@@ -14,7 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
@@ -77,6 +76,7 @@ class RessourcesType extends AbstractType {
                         'fusion' => 'fusion',
                         'condensation atmosphérique' => 'condensation atmosphérique',
                         'chimie' => 'chimie',
+                        'recyclage' => 'recyclage',
                     ],
                 ])
                 ->add('ressourcesForRessource', EntityType::class, array(
@@ -93,12 +93,12 @@ class RessourcesType extends AbstractType {
                 ->add('imageShowName', FileType::class, array(
                     'label' => 'Image fiche ressource',
                     'required' => false,
-                    'data_class' => null,
+                    'data_class' => NULL,
                 ))
                 ->add('imageIndexName', FileType::class, array(
                     'label' => 'Image ressource',
                     'required' => false,
-                    'data_class' => null,
+                    'data_class' => NULL,
                 ))
                 ->add('ressourcesCreateByRessources', EntityType::class, array(
                     'class' => Ressources::class,
