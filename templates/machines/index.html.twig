@@ -12,7 +12,9 @@
                     <div class="col-12 col-lg-8 offset-lg-2">
 
                         <h1>Liste des machines</h1>
-                        <a class="btn btn-lg btn-primary bg-dark border-transparent opacity-90" href="{{ path('machines_new') }}">Ajouter</a>
+                        {% if is_granted('ROLE_SUPERADMIN') %}
+                            <a class="btn btn-lg btn-primary bg-dark border-transparent opacity-90" href="{{ path('machines_new') }}">Ajouter</a>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -41,7 +43,9 @@
                             <div class="col-6 col-md-4" data-shuffle="item" data-groups="{% if machine.machineWhoCreateMachines == null %}{% else %}{{ machine.machineWhoCreateMachines.name }}{% endif %}">
                                 <p><a href="{{ path('machines_show', {'id': machine.id}) }}"><img src="/assets/img/uploadIndexMachine/{{ machine.imageIndexName }}" alt="{{ machine.name }}" class="w-150"></a></p>
                                 <p><strong>{{ machine.name }}</strong></p>
+                            {% if is_granted('ROLE_SUPERADMIN') %}
                                 <p><a class="btn btn-sm btn-info-outline border-transparent opacity-85" href="{{ path('machines_edit', {'id': machine.id}) }}">Modifier</a></p>
+                            {% endif %}
                             </div>
 
                         {% endfor %}

@@ -12,7 +12,9 @@
                     <div class="col-12 col-lg-8 offset-lg-2">
 
                         <h1>{{ vehicle.name }}</h1>
+                        {% if is_granted('ROLE_SUPERADMIN') %}
                         <p><a class="btn btn-lg btn-primary opacity-85" href="{{ path('vehicles_edit', {'id': vehicle.id}) }}">Modifier</a></p>
+                        {% endif %}
                         <p><a class="btn btn-sm btn-secondary opacity-85" href="{{ path('vehicles_index') }}">Retour</a></p>
                     </div>
                 </div>
@@ -55,10 +57,12 @@
                         <img src="/assets/img/uploadShowVehicle/{{ vehicle.imageShowName }}" alt="..." data-aos="fade-up" data-aos-duration="2000">
                     </div>
 
+                    {% if is_granted('ROLE_SUPERADMIN') %}
                     <div class="col-12 text-center">
                         <br><br>
                         {{ include('vehicles/_delete_form.html.twig') }}
                     </div>
+                    {% endif %}
 
                 </div>
 

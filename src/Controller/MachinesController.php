@@ -11,12 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/machines")
+ * @Route("")
  */
 class MachinesController extends AbstractController
 {
     /**
-     * @Route("/", name="machines_index", methods={"GET"})
+     * @Route("/machines/", name="machines_index", methods={"GET"})
      */
     public function index(MachinesRepository $machinesRepository): Response
     {
@@ -26,7 +26,7 @@ class MachinesController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="machines_new", methods={"GET","POST"})
+     * @Route("/admin/machines/new", name="machines_new", methods={"GET","POST"})
      */
     public function newAction(Request $request): Response
     {
@@ -72,7 +72,7 @@ class MachinesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="machines_show", methods={"GET"})
+     * @Route("/machines/{id}", name="machines_show", methods={"GET"})
      */
     public function show(Machines $machine): Response
     {
@@ -82,7 +82,7 @@ class MachinesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="machines_edit", methods={"GET","POST"})
+     * @Route("/admin/machines/{id}/edit", name="machines_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Machines $machine): Response
     {
@@ -127,7 +127,7 @@ class MachinesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="machines_delete", methods={"DELETE"})
+     * @Route("/admin/machines/{id}", name="machines_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Machines $machine): Response
     {

@@ -11,12 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/vehicles")
+ * @Route("")
  */
 class VehiclesController extends AbstractController
 {
     /**
-     * @Route("/", name="vehicles_index", methods={"GET"})
+     * @Route("/vehicles/", name="vehicles_index", methods={"GET"})
      */
     public function index(VehiclesRepository $vehiclesRepository): Response
     {
@@ -26,7 +26,7 @@ class VehiclesController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="vehicles_new", methods={"GET","POST"})
+     * @Route("/admin/vehicles/new", name="vehicles_new", methods={"GET","POST"})
      */
     public function newAction(Request $request): Response
     {
@@ -72,7 +72,7 @@ class VehiclesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="vehicles_show", methods={"GET"})
+     * @Route("/vehicles/{id}", name="vehicles_show", methods={"GET"})
      */
     public function show(Vehicles $vehicle): Response
     {
@@ -82,7 +82,7 @@ class VehiclesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="vehicles_edit", methods={"GET","POST"})
+     * @Route("/admin/vehicles/{id}/edit", name="vehicles_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Vehicles $vehicle): Response
     {
@@ -127,7 +127,7 @@ class VehiclesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="vehicles_delete", methods={"DELETE"})
+     * @Route("/admin/vehicles/{id}", name="vehicles_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Vehicles $vehicle): Response
     {

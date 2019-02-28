@@ -12,7 +12,9 @@
                     <div class="col-12 col-lg-8 offset-lg-2">
 
                         <h1>{{ machine.name }}</h1>
-                        <p><a class="btn btn-lg btn-primary opacity-85" href="{{ path('machines_edit', {'id': machine.id}) }}">Modifier</a></p>
+                        {% if is_granted('ROLE_SUPERADMIN') %}
+                            <p><a class="btn btn-lg btn-primary opacity-85" href="{{ path('machines_edit', {'id': machine.id}) }}">Modifier</a></p>
+                        {% endif %}
                         <p><a class="btn btn-sm btn-secondary opacity-85" href="{{ path('machines_index') }}">Retour</a></p>
                     </div>
                 </div>
@@ -150,11 +152,12 @@
                             {% endif %}
                         </div>
                     </div>
-
+                    {% if is_granted('ROLE_SUPERADMIN') %}
                     <div class="col-12 text-center">
                         <br><br>
                         {{ include('machines/_delete_form.html.twig') }}
                     </div>
+                    {% endif %}
 
                 </div>
 

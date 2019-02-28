@@ -11,12 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/objects")
+ * @Route("")
  */
 class ObjectsController extends AbstractController
 {
     /**
-     * @Route("/", name="objects_index", methods={"GET"})
+     * @Route("/objects/", name="objects_index", methods={"GET"})
      */
     public function index(ObjectsRepository $objectsRepository): Response
     {
@@ -26,7 +26,7 @@ class ObjectsController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="objects_new", methods={"GET","POST"})
+     * @Route("/admin/objects/new", name="objects_new", methods={"GET","POST"})
      */
     public function newAction(Request $request): Response
     {
@@ -72,7 +72,7 @@ class ObjectsController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="objects_show", methods={"GET"})
+     * @Route("/objects/{id}", name="objects_show", methods={"GET"})
      */
     public function show(Objects $object): Response
     {
@@ -82,7 +82,7 @@ class ObjectsController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="objects_edit", methods={"GET","POST"})
+     * @Route("/admin/objects/{id}/edit", name="objects_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Objects $object): Response
     {
@@ -127,7 +127,7 @@ class ObjectsController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="objects_delete", methods={"DELETE"})
+     * @Route("/admin/objects/{id}", name="objects_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Objects $object): Response
     {

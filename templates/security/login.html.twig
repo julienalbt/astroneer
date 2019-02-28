@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    <main class="main-content mh-fullscreen bg-img center-vh" data-parallax="{{ asset('assets/img/accueil.jpg') }}" data-overlay="3">
+        <div class="card card-shadowed p-50 w-700 my-50 opacity-85" style="max-width: 100%">
+            <h5 class="text-uppercase text-center mb-50">Se connecter</h5>
+            
+            <form action="{{ path('app_login') }}" method="post" autocomplete="off" class="form-type-material">
+                <div class="form-group">
+                    <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control" placeholder="Nom d'utilisateur" autofocus>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" name="_password" class="form-control" placeholder="Mot de passe">
+                </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+                <br><br>
+                <button type="submit" class="btn btn-bold btn-block btn-info">Connexion</button>
+                <a href="{{ path('default') }}" class="btn btn-bold btn-block btn-secondary">Retour</a>
+             </form> 
+        </div>
+    </main>
+{% endblock %}

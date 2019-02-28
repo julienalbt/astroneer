@@ -12,7 +12,9 @@
                     <div class="col-12 col-lg-8 offset-lg-2">
 
                         <h1>{{ planet.name }}</h1>
+                        {% if is_granted('ROLE_SUPERADMIN') %}
                         <p><a class="btn btn-lg btn-primary opacity-85" href="{{ path('planets_edit', {'id': planet.id}) }}">Modifier</a></p>
+                        {% endif %}
                         <p><a class="btn btn-sm btn-secondary opacity-85" href="{{ path('planets_index') }}">Retour</a></p>
                     </div>
                 </div>
@@ -55,11 +57,12 @@
                             </p>
                         </div>
                     </div>
-
+                    {% if is_granted('ROLE_SUPERADMIN') %}
                     <div class="col-12 text-center">
                         <br><br>
                         {{ include('planets/_delete_form.html.twig') }}
                     </div>
+                    {% endif %}
 
                 </div>
 

@@ -59,7 +59,12 @@
                         <hr>
 
                         <p class="text-center opacity-70">Wiki français pour le jeu Astroneer</p>
-                    </div>
+                        {% if is_granted('ROLE_SUPERADMIN') %}
+                        <p class="text-center"><a href="{{ path('app_logout') }}"><small class="opacity-70 hover-danger">Déconnexion</small></a></p>
+                        {% else %}
+                        <p class="text-center"><a href="{{ path('app_login') }}"><small class="opacity-70 hover-danger">Admin</small></a></p>
+                        {% endif %}
+                        </div>
                 </div>
             </section>
 

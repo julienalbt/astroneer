@@ -11,12 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/ressources")
+ * @Route("")
  */
 class RessourcesController extends AbstractController {
 
     /**
-     * @Route("/", name="ressources_index", methods={"GET"})
+     * @Route("/ressources/", name="ressources_index", methods={"GET"})
      */
     public function index(RessourcesRepository $ressourcesRepository): Response {
         return $this->render('ressources/index.html.twig', [
@@ -25,7 +25,7 @@ class RessourcesController extends AbstractController {
     }
 
     /**
-     * @Route("/new", name="ressources_new", methods={"GET","POST"})
+     * @Route("/admin/ressources/new", name="ressources_new", methods={"GET","POST"})
      */
     public function newAction(Request $request): Response {
         $ressource = new Ressources();
@@ -70,7 +70,7 @@ class RessourcesController extends AbstractController {
     }
 
     /**
-     * @Route("/{id}", name="ressources_show", methods={"GET"})
+     * @Route("/ressources/{id}", name="ressources_show", methods={"GET"})
      */
     public function show(Ressources $ressource): Response {
         return $this->render('ressources/show.html.twig', [
@@ -79,7 +79,7 @@ class RessourcesController extends AbstractController {
     }
 
     /**
-     * @Route("/{id}/edit", name="ressources_edit", methods={"GET","POST"})
+     * @Route("/admin/ressources/{id}/edit", name="ressources_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Ressources $ressource): Response {
         $ressource->setImageIndexName($ressource->getImageIndexName());
@@ -124,7 +124,7 @@ class RessourcesController extends AbstractController {
     }
 
     /**
-     * @Route("/{id}", name="ressources_delete", methods={"DELETE"})
+     * @Route("/admin/ressources/{id}", name="ressources_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Ressources $ressource): Response {
         if ($this->isCsrfTokenValid('delete' . $ressource->getId(), $request->request->get('_token'))) {

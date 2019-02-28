@@ -11,12 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/planets")
+ * @Route("")
  */
 class PlanetsController extends AbstractController
 {
     /**
-     * @Route("/", name="planets_index", methods={"GET"})
+     * @Route("/planets/", name="planets_index", methods={"GET"})
      */
     public function index(PlanetsRepository $planetsRepository): Response
     {
@@ -26,7 +26,7 @@ class PlanetsController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="planets_new", methods={"GET","POST"})
+     * @Route("/admin/planets/new", name="planets_new", methods={"GET","POST"})
      */
     public function newAction(Request $request): Response
     {
@@ -72,7 +72,7 @@ class PlanetsController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="planets_show", methods={"GET"})
+     * @Route("/planets/{id}", name="planets_show", methods={"GET"})
      */
     public function show(Planets $planet): Response
     {
@@ -82,7 +82,7 @@ class PlanetsController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="planets_edit", methods={"GET","POST"})
+     * @Route("/admin/planets/{id}/edit", name="planets_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Planets $planet): Response
     {
@@ -127,7 +127,7 @@ class PlanetsController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="planets_delete", methods={"DELETE"})
+     * @Route("/admin/planets/{id}", name="planets_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Planets $planet): Response
     {
